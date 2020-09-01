@@ -2,16 +2,21 @@ const chalk = require("chalk");
 const geoCode = require("./utils/geocode");
 const forecast = require("./utils/forecast");
 
-geoCode("Victoria BC", (error, data) => {
-  console.log(chalk.red.inverse(`Error: ${error}`));
-  console.log(chalk.inverse(`${data.location}:`));
-  console.log(
-    chalk.inverse.green(`Longitude: ${data.longitude}
-Latitude: ${data.latitude}`)
-  );
-});
+geoCode(process.argv[2], (error, data) => {
+  if (process.argv[2]) {
+    if (error) {
+      return console.log(chalk.red.inverse(`Error: ${error}`));
+    }
 
-forecast(44.1545, -75.7088, (error, data) => {
-  console.log("Error: ", error);
-  console.log("Data: ", data);
+    forecast(data.latitude, data.longitude, (error, forecastData) => {
+      if (error) {
+        return console.log("Error: ", error);
+      }
+      console.log(data.location);
+      console.log(forecastData.forecast);
+      console.log(forecastData.location);
+    });
+  } else {
+    console.log("Please provide a location");
+  }
 });

@@ -10,9 +10,13 @@ const forecast = (latitude, longitude, callback) => {
       callback(`Location Error: Please check coordinates`, undefined);
     } else {
       callback(undefined, {
-        forecast: body.current.weather_descriptions[0],
+        location: body.location.name,
+        coord: `latitude: ${body.location.lat}, Longitude: ${body.location.lon}`,
+        descript: body.current.weather_descriptions[0],
         temperature: body.current.temperature,
         precip: body.current.precip,
+        forecast: `${body.current.weather_descriptions}. It is currently ${body.current.temperature} degrees out. The percentage of precipitation is ${body.current.precip}.`,
+        body,
       });
     }
   });
