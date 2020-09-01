@@ -11,6 +11,7 @@ const forecast = (latitude, longitude, callback) => {
     } else {
       callback(undefined, {
         location: body.location.name,
+        query: body.request.query,
         coord: `latitude: ${body.location.lat}, Longitude: ${body.location.lon}`,
         descript: body.current.weather_descriptions[0],
         temperature: body.current.temperature,
