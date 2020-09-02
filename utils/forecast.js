@@ -3,11 +3,11 @@ const apiInfo = require("../keys");
 
 const forecast = (latitude, longitude, callback) => {
   const url = `http://api.weatherstack.com/current?access_key=${apiInfo.weather}&query=${latitude},${longitude}`;
-  request({ url, json: true }, (error, response, { error: bodyError, location, request, current }) => {
+  request({ url, json: true }, (error, response, { error: bodyError, location, request, current } = {}) => {
     if (error) {
       callback(`Unable to connect to weather services! Please try again later`, undefined);
     } else if (bodyError) {
-      callback(`Location Error: Please check coordinates`, undefined);
+      callback(`Location Error, Please check coordinates`, undefined);
     } else {
       callback(undefined, {
         location: location.name,
